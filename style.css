@@ -1,5 +1,7 @@
 img {
     border: 2px solid darkgray;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #content {
@@ -18,4 +20,8 @@ span.code {
     font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
     background: whitesmoke;
     font-size: 0.9em;
+}
+
+h3 a {
+    color: black;
 }

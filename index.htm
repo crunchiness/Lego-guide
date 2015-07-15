@@ -12,10 +12,23 @@
 
     <h2>How to install <span class="name">lejos-server</span> on EV3:</h2>
 
-    <p>This guide is based on <a href="http://sourceforge.net/p/lejos/wiki/Installing%20leJOS/">http://sourceforge.net/p/lejos/wiki/Installing%20leJOS/</a>.
+    <p>
+        This guide is based on <a href="http://sourceforge.net/p/lejos/wiki/Installing%20leJOS/">http://sourceforge.net/p/lejos/wiki/Installing%20leJOS/</a>.
     </p>
 
-    <h3>Pre-requisites:</h3>
+    <h4>Contents</h4>
+    <ul>
+        <li><a href="#prereq">Prerequisites</a></li>
+        <li><a href="#step-1">Step 1: download leJOS</a></li>
+        <li><a href="#step-2">Step 2: prepare the memory card</a></li>
+        <li><a href="#step-3">Step 3: install leJOS on the brick</a></li>
+        <li><a href="#step-4">Step 4: connect to EV3 via Bluetooth</a></li>
+        <li><a href="#step-5">Step 5: install <span class="name">lejos-server</span> onto the EV3</a></li>
+        <li><a href="#step-6">Step 6: install Matlab toolbox <span class="name">matlab-puppeteer</span></a></li>
+        <li><a href="#step-7">Step 7: Using <span class="name">matlab-puppeteer</span></a></li>
+        <li><a href="#additional-1">Additional 1: building <span class="name">lejos-server</span> from source</a></li>
+    </ul>
+    <h3><a name="prereq">Prerequisites:</a></h3>
     <ul>
         <li>
             MicroSD card (min 2 GB, SDXC is NOT supported) 2 GB card will be sufficient.
@@ -34,7 +47,7 @@
         </li>
     </ul>
 
-    <h3>Step one: download leJOS</h3>
+    <h3><a name="step-1">Step 1: download leJOS</a></h3>
 
     <p>
         If you're using Linux (or Mac OS X), then download a file named <span
@@ -45,7 +58,7 @@
         compatibility issues.
     </p>
 
-    <h3>Step two: prepare the memory card</h3>
+    <h3><a name="step-2">Step 2: prepare the memory card</a></h3>
 
     <p>
         To install leJOS you will need a blank SD card of at least 2GB and no more than 32GB. SDXC cards are not
@@ -56,7 +69,7 @@
         which can cause problems with the EV3.
     </p>
 
-    <h3>Step three: install leJOS on the brick</h3>
+    <h3><a name="step-3">Step 3: install leJOS on the brick</a></h3>
 
     <p>
         In the <span class="code">leJOS_EV3_0.9.0-beta</span> directory you will find
@@ -82,7 +95,7 @@
         have stock software.
     </p>
 
-    <h3>Step four: connect to EV3 via Bluetooth</h3>
+    <h3><a name="step-4">Step 4: connect to EV3 via Bluetooth</a></h3>
 
     <p>
         It is possible to connect to the brick via Bluetooth, WiFi, or USB cable. In each case a
@@ -98,7 +111,7 @@
     <p>
         DICE machines should be prepared for EV3 connection. Plug in the Bluetooth dongle provided. The MAC address
         should be written/attached to the brick. If it's not there, <a href="#mac">refer to Linux guide</a> on how to
-        obtain it. To connect issue these commands:<br/>
+        obtain it. To connect issue these commands (with a pause in between):<br/>
         <span class="code">ev3pand 00:16:53:46:63:B6<br/>ev3conf 10.0.1.2</span><br/>
         Where <span class="code">00:16:53:46:63:B6</span> is your brick's MAC address. The second command assigns IP
         <span class="code">10.0.1.2</span> to your computer on bluetooth interface so you can choose it freely. Default
@@ -109,7 +122,18 @@
     <h4>Windows</h4>
 
     <p>
-        Connecting on Windows is quite straightforward, but it's a little different on different versions.
+        Connecting on Windows is quite straightforward, but it's a little different on different versions. Make sure
+        your computer has bluetooth on. On Windows 8.1:<br/>
+        Go to "Control Panel", find "Devices and Printers" and enter. Click "Add a device". It should look like this:
+        <br/>
+        <img src="windows_screenshots/1.png"/><br/>
+        When "EV3" is found click on it and "next". It will prompt you with a code, asking if you can see it on the EV3.
+        However, this feature is not currently supported by leJOS, so you won't see the code. If you confirm that you
+        see it, the device should be installed:<br/>
+        <img src="windows_screenshots/2.png"/><br/>
+        And it should appear in the list of "Devices and Printers". Right-click it, and connect:<br/>
+        <img src="windows_screenshots/3.png"/><br/>
+        You can ping the brick just like in Linux, to see if it's actually connected.
     </p>
 
 
@@ -134,12 +158,13 @@
         Error: <span class="code">Device is not available: No such device</span> usually means that you bluetooth dongle
         is not connected.
     </p>
+
     <p>
         <a name="mac">Now</a> you can connect to the brick:
         <span class="code">sudo pand --connect 00:16:53:46:63:B6</span> where
         <span class="code">00:16:53:46:63:B6</span> is the MAC address of the brick. This command won't print anything.
         <br/>
-        Now issue<br/>
+        After a pause issue<br/>
         <span class="code">sudo ifconfig bnep0 10.0.1.2</span><br/>
         OR<br/>
         <span class="code">sudo ip address add 10.0.1.2 dev bnep0</span>
@@ -156,20 +181,67 @@
             EV3 running LeJOS using Bluetooth</a>.
     </p>
 
-    <h3>Step four: install Matlab toolbox <span class="name">matlab-puppeteer</span></h3>
+    <h3><a name="step-5">Step 5: install <span class="name">lejos-server</span> onto the EV3</a></h3>
+
+    <p>
+        Download <span class="name">lejos-server</span> from
+        <a href="https://drive.google.com/file/d/0B5vv2ewPn7pGMHBzMm9DWk9EaVk/view?usp=sharing">here</a>. It should
+        be a file called <span class="code">LocalServer.jar</span>.<br/>
+        You may copy this file to the brick via scp or straight into the memory card.<br/><br/>
+        <b>Via SCP on Linux</b><br/>
+        <span class="code">scp LocalServer.jar root@10.0.1.1:/home/lejos/programs/</span><br/>
+        Default password on the brick is empty, so when prompted just hit ENTER.
+        <br/><br/>
+        <b>Via SCP on Windows</b><br/>
+        You will need some client, like <a href="https://winscp.net/eng/index.php">WinSCP</a>.
+        <br/>
+        Open WinSCP, enter details:<br/>
+        <img src="windows_screenshots/4.png"/><br/>
+        You will be prompted for password:<br/>
+        <img src="windows_screenshots/5.png"/><br/>
+        Default password on the brick is empty, so simply click OK.<br/>
+        You may see this error, but it should be harmless:<br/>
+        <img src="windows_screenshots/6.png"/><br/>
+        When you are logged in, navigate to <span class="code">/home/lejos/programs</span> on the brick and copy
+        <span class="code">LocalServer.jar</span> there. If you are using WinSCP in commander mode it should look like
+        this:<br/>
+        <img src="windows_screenshots/7.png"/>
+        <br/><br/>
+        And you can simply drag and drop the file.<br/><br/>
+        <b>Into the memory card</b><br/>
+        Just connect your card to computer and place the file into <span class="code">/home/lejos/programs/</span> on
+        the card (there will be two partitions on this card, so the file should be placed in the one where that folder
+        exists).
+    </p>
+
+    <p>
+        Now you can run <span class="name">lejos-server</span> on your brick (navigate to programs and execute
+        <span class="code">LocalServer.jar</span>. When the program loads it should display text "READY" on the screen.
+    </p>
+
+    <h3><a name="step-6">Step 6: install Matlab toolbox <span class="name">matlab-puppeteer</span></a></h3>
+
     <p>
         In principle you don't have to use this toolbox or even Matlab. <span class="name">matlab-puppeteer</span> sends
-        JSON commands to <span class="name">lejos-server</span>, so
+        JSON commands to <span class="name">lejos-server</span> via TCP connection, so as long as you can do that in
+        your programming language, you should be able to use it.
     </p>
+
     <p>
-
+        Download the toolbox from
+        <a href="https://drive.google.com/file/d/0B5vv2ewPn7pGcTJIaG0zQ09OT0E/view?usp=sharing">here</a> (file
+        <span class="code">matlab-puppeteer.mltbx</span>). Open the file with Matlab, and install when prompted.
     </p>
-    <h3>Step five: Using <span class="name">matlab-puppeteer</span></h3>
+
+    <h3><a name="step-7">Step 7: Using <span class="name">matlab-puppeteer</span></a></h3>
+
     <p>
-
+        Documentation is available on
+        <a href="https://github.com/crunchiness/matlab-puppeteer">github</a> (README).
+        Test programs are <a href="https://github.com/crunchiness/matlab-puppeteer/tree/master/test_programs">here</a>.
     </p>
 
-    <h3>Bonus: building from source</h3>
+    <h3><a name="additional-1">Additional 1: building <span class="name">lejos-server</span> from source</a></h3>
 
     <p>
         If you want to build <span class="name">lejos-server</span> from source, you will need to do this via Eclipse
