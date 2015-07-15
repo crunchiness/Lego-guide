@@ -219,18 +219,20 @@
         <span class="code">LocalServer.jar</span>. When the program loads it should display text "READY" on the screen.
     </p>
 
-    <h3><a name="step-6">Step 6: install Matlab toolbox <span class="name">matlab-puppeteer</span></a></h3>
+    <h3><a name="step-6">Step 6: Install Matlab toolbox <span class="name">matlab-puppeteer</span></a></h3>
 
     <p>
         In principle you don't have to use this toolbox or even Matlab. <span class="name">matlab-puppeteer</span> sends
         JSON commands to <span class="name">lejos-server</span> via TCP connection, so as long as you can do that in
-        your programming language, you should be able to use it.
+        your programming language, you should be able to use it. Refer to
+        <a href="https://github.com/crunchiness/lejos-server">documentation of <span class="name">lejos-server</span></a>
+        for details of what JSON api.
     </p>
 
     <p>
         Download the toolbox from
         <a href="https://drive.google.com/file/d/0B5vv2ewPn7pGcTJIaG0zQ09OT0E/view?usp=sharing">here</a> (file
-        <span class="code">matlab-puppeteer.mltbx</span>). Open the file with Matlab, and install when prompted.
+        <span class="code">matlab-puppeteer.mltbx</span>). Open the file form Matlab, and install when prompted.
     </p>
 
     <h3><a name="step-7">Step 7: Using <span class="name">matlab-puppeteer</span></a></h3>
@@ -247,11 +249,19 @@
         If you want to build <span class="name">lejos-server</span> from source, you will need to do this via Eclipse
         using Eclipse plugin (or write your own build scripts, in which case this would be the place to start:
         <a href="http://sourceforge.net/p/lejos/wiki/Using%20ant%20build%20files/">http://sourceforge.net/p/lejos/wiki/Using%20ant%20build%20files/</a>).
-    </p>
+        <br/>
+        <a href="http://sourceforge.net/p/lejos/wiki/Installing%20the%20Eclipse%20plugin/">Guide on how to set up Eclipse plugin.</a>
 
-    <p>
-        <span class="code">export EV3_HOME=~/leJOS_EV3_0.9.0-beta/lib/ev3</span>
-        [how to install Eclipse plugin, set EV3_HOME].
+        <span class="name">lejos-server</span> depends on "json-simple" library. You can download it from
+        <a href="https://code.google.com/p/json-simple/downloads/list">https://code.google.com/p/json-simple/downloads/list</a>
+        (file <span class="code">json-simple-1.1.1.jar</span>).
+        Unfortunately, at the moment of writing Eclipse plugin doesn't provide any simple way to include libraries when
+        uploading to brick. Instead you can open <span class="code">json-simple-1.1.1.jar</span> as archive, and extract
+        folder <span class="code">org</span> into <span class="code">lejos-server/bin/</span> (assuming
+        <span class="code">lejos-server</span> is where the <span class="code">src/</span> is). Eclipse will then
+        package it into on jar.<br/><br/>
+        To build <span class="name">lejos-server</span> do "run as > LeJOS EV3 program" in Eclipse. This should
+        also upload it on the brick and run it.
     </p>
 </div>
 </body>
